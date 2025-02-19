@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('pengembalians', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('peminjamen_id')->constrained('peminjamen')->onDelete('strict');
-            $table->string('tgl_pengembalian')->nullable();
-            $table->integer('denda')->default(0);  
+            $table->foreignId('borrowing_id')->nullable()->constrained('borrowings')->onDelete('cascade');
+            $table->date('tanggal_pengembalian')->nullable();
+            $table->integer('denda')->default(0);
+            $table->enum('status', ['dipinjam', 'dikembalikan'])->default('dipinjam');
             $table->softDeletes();
             $table->timestamps();
         });
