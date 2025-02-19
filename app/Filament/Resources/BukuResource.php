@@ -55,7 +55,8 @@ class BukuResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('judul')
-                    ->searchable(),
+                    ->searchable()
+                    ->limit('50'),
                 Tables\Columns\TextColumn::make('penulis')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('penerbit')
@@ -65,7 +66,7 @@ class BukuResource extends Resource
                 Tables\Columns\TextColumn::make('isbn')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('kategori.id')
+                Tables\Columns\TextColumn::make('kategori.nama_kategori')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('jumlah')
@@ -87,9 +88,14 @@ class BukuResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
+
+                    ->query(Buku::query()->withTrashed()) // Menampilkan semua data, termasuk yang dihapus
+                    ->actions([
+                        Tables\Actions\DeleteAction::make(), // Menghapus data dengan soft delete
+                        Tables\Actions\RestoreAction::make(), // Mengembalikan data yang dihapus
+                        Tables\Actions\EditAction::make(),
+                    ])
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -97,6 +103,7 @@ class BukuResource extends Resource
             ]);
     }
 
+    
     public static function getRelations(): array
     {
         return [

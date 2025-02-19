@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BorrowingResource\Pages;
 use App\Filament\Resources\BorrowingResource\RelationManagers;
 use App\Models\Borrowing;
+use Auth;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -35,9 +36,14 @@ class BorrowingResource extends Resource
                 ->relationship('buku', 'judul')
                 ->required()
                 ->options(Buku::all()->pluck('judul', 'id')),
-            Forms\Components\Select::make('user_id')
-                ->relationship('user', 'name')
-                ->required(),
+            Forms\Components\hidden::make('user_id')
+                // ->relationship('user', 'name')
+                // ->required(),
+                ->default(Auth::id()),
+                Forms\Components\TextInput::make('nama peminjam')
+                ->default(Auth::user()->name)
+                ->disabled()
+                ->dehydrated(false),
                 Forms\Components\DatePicker::make('tgl_pinjam')
                 ->required()
                 ->default(now()->format('Y-m-d')), // Formatkan sesuai kebutuhan,
