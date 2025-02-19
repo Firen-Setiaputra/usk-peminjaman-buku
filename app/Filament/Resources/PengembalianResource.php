@@ -21,6 +21,8 @@ class PengembalianResource extends Resource
 {
     protected static ?string $model = Pengembalian::class;
 
+    protected static ?string $pluralLabel = 'Pengembalian';
+
     protected static ?string $navigationGroup = 'Transaksi';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

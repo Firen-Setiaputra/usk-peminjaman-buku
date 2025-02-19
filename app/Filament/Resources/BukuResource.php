@@ -17,6 +17,8 @@ class BukuResource extends Resource
 {
     protected static ?string $model = Buku::class;
 
+    protected static ?string $pluralLabel = 'Daftar Buku';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
