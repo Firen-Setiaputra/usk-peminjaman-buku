@@ -64,10 +64,11 @@ class PengembalianResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('borrowing_id.buku.judul')
-                ->label('ID Pinjaman')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('borrowing.user.name')
+                ->label('Peminjam & Buku')
+                ->formatStateUsing(fn ($record) => "{$record->borrowing->user->name} - {$record->borrowing->buku->judul}")
+                ->sortable()
+                ->searchable(),
                 Tables\Columns\TextColumn::make('tanggal_pengembalian')
                 ->label('Tanggal Pengembalian')
                 ->date()
