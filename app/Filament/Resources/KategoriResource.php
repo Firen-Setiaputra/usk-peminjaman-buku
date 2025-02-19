@@ -25,6 +25,20 @@ class KategoriResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function canDelete ($record): bool
+    {
+        return auth()->user()->jenis === 'admin';
+    }
+    public Static function canCreate (): bool
+    {
+        return auth()->user()->jenis === 'admin';
+    }
+
+    public static function canEdit ($record): bool
+    {
+        return auth()->user()->jenis === 'admin';
+    }
+
     public static function form(Form $form): Form
     {
         return $form

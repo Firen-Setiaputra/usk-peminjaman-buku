@@ -22,6 +22,11 @@ class BorrowingResource extends Resource
     protected static ?string $navigationGroup = 'Transaksi';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function canDelete ($record): bool
+    {
+        return auth()->user()->jenis === 'admin';
+    }
+
     public static function form(Form $form): Form
     {
         return $form

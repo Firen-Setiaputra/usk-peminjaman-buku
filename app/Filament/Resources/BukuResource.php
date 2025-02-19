@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BukuResource\Pages;
 use App\Filament\Resources\BukuResource\RelationManagers;
 use App\Models\Buku;
+use Filament\Actions\StaticAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -110,5 +111,24 @@ class BukuResource extends Resource
             'create' => Pages\CreateBuku::route('/create'),
             'edit' => Pages\EditBuku::route('/{record}/edit'),
         ];
+    }
+
+    // public static function CanViewAny (): bool
+    // {
+    //     return auth()->user()->jenis === 'admin';
+    // }
+
+    public Static function canCreate (): bool
+    {
+        return auth()->user()->jenis === 'admin';
+    }
+
+    public static function canEdit ($record): bool
+    {
+        return auth()->user()->jenis === 'admin';
+    }
+    public static function canDelete ($record): bool
+    {
+        return auth()->user()->jenis === 'admin';
     }
 }
